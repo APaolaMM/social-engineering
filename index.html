@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="stylesheet.css" />
+  <title>Ingeniería Social</title>
+
+</head>
+
+<body>
+	<div class="video">
+	<video controls autoplay width="640" height="480">
+		<source src="Social Engineering\Módulo 5_Social Engineering.mp4" type="video/mp4" />
+	</video>
+</div>
+    <div class="preguntasportema"> 
+<fieldset>
+	<legend>Cuestionario Ingeniería Social</legend>
+	<div id="test">
+		<div class="cuestion">1. “Con los datos obtenidos se elabora un ataque con base en los intereses de la v&iacute;ctima para ganarse su confianza, de tal forma que parezca real”. La fase de ciberataque anterior corresponde a:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="0" value="a">&nbsp;a : Relaci&oacute;n de confianza con la v&iacute;ctima.&nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="b">&nbsp;b : Abuso de confianza.&nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="c">&nbsp;c : Ejecuci&oacute;n del ciberataque.&nbsp;</label>
+		</div>
+		<div class="cuestion">2. “Una vez que se obtuvo la puerta de entrada para realizar el ataque, el ciberdelincuente se retira r&aacute;pidamente sin dejar rastro del v&iacute;nculo realizado”. La fase de ciberataque anterior corresponde a:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="1" value="a">&nbsp;a : Relaci&oacute;n de confianza con la v&iacute;ctima.&nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="b">&nbsp;b : Recopilaci&oacute;n de informaci&oacute;n.&nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="c">&nbsp;c : Ejecuci&oacute;n del ciberataque.&nbsp;</label>
+		</div>
+		<div class="cuestion">3. “Se recopila la m&aacute;xima informaci&oacute;n posible sobre la v&iacute;ctima para trazar un plan de contacto que no luzca sospechoso”. La fase de ciberataque anterior corresponde a:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="2" value="a">&nbsp;a : Abuso de confianza.&nbsp;</label>
+			<label>
+				<input type="radio" name="2" value="b">&nbsp;b : Recopilaci&oacute;n de informaci&oacute;n.&nbsp;</label>
+			<label>
+				<input type="radio" name="2" value="c">&nbsp;c : Ejecuci&oacute;n del ciberataque. &nbsp;</label>
+		</div>
+	</div>
+	<button id="boton">Mostrar resultado</button>
+	<div id="resultado">
+		<br>
+	</div>
+	<script>
+		const contenedor = document.getElementById("test");
+		const botonRes = document.getElementById("boton");
+		const resultadoTest = document.getElementById("resultado");
+
+		const preguntas = [
+			{
+				pregunta: "1. “Con los datos obtenidos se elabora un ataque con base en los intereses de la víctima para ganarse su confianza, de tal forma que parezca real”. La fase de ciberataque anterior corresponde a:",
+				respuestas:
+				{
+					a: "Relación de confianza con la víctima.",
+					b: "Abuso de confianza.",
+					c: "Ejecución del ciberataque.",
+				},
+				respuestaCorrecta: "a",
+			},
+			{
+				pregunta: "2. “Una vez que se obtuvo la puerta de entrada para realizar el ataque, el ciberdelincuente se retira rápidamente sin dejar rastro del vínculo realizado”. La fase de ciberataque anterior corresponde a:",
+				respuestas:
+				{
+					a: "Relación de confianza con la víctima.",
+					b: "Recopilación de información.",
+					c: "Ejecución del ciberataque.",
+				},
+				respuestaCorrecta: "c",
+			},
+			{
+				pregunta: "3. “Se recopila la máxima información posible sobre la víctima para trazar un plan de contacto que no luzca sospechoso”. La fase de ciberataque anterior corresponde a:",
+				respuestas:
+				{
+					a: "Abuso de confianza.",
+					b: "Recopilación de información.",
+					c: "Ejecución del ciberataque.",
+				},
+				respuestaCorrecta: "b",
+			},
+
+		];
+
+		function mostrarTest()
+		{
+			const preguntasYrespuestas = [];
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+
+				const respuestas = [];
+
+				for (letraRespuesta in preguntaActual.respuestas)
+				{
+
+					respuestas.push(
+
+						`
+        <label>
+                  <input type="radio" name="${numeroDePregunta}" value="${letraRespuesta}" />
+                  ${letraRespuesta} : ${preguntaActual.respuestas[letraRespuesta]} <br>
+              </label>` 
+					);
+                   
+				}
+
+				preguntasYrespuestas.push(
+					`
+      <div class="cuestion">${preguntaActual.pregunta}</div>
+      
+          <div class="respuestas"> ${respuestas.join("")} </div>
+          `
+				);
+			});
+
+			contenedor.innerHTML = preguntasYrespuestas.join("");
+		}
+
+		mostrarTest();
+
+		function mostrarResultado()
+		{
+			const respuestas = contenedor.querySelectorAll(".respuestas");
+			let respuestasCorrectas = 0;
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+				const todasLasRespuestas = respuestas[numeroDePregunta];
+				const checkboxRespuestas = `input[name='${numeroDePregunta}']:checked`;
+				const respuestaElegida = (
+					todasLasRespuestas.querySelector(checkboxRespuestas) ||
+					{}
+				).value;
+
+				if (respuestaElegida === preguntaActual.respuestaCorrecta)
+				{
+					respuestasCorrectas++;
+
+					respuestas[numeroDePregunta].style.color = "blue";
+				}
+				else
+				{
+					respuestas[numeroDePregunta].style.color = "red";
+				}
+			});
+
+			resultadoTest.innerHTML =
+				"Usted ha acertado " +
+				respuestasCorrectas +
+				" preguntas de un total de " +
+				preguntas.length;
+		}
+
+		botonRes.addEventListener("click", mostrarResultado);
+
+	</script>
+       </div>
+
+</fieldset>
+</body>
+</html>
